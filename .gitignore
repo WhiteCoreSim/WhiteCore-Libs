@@ -1,0 +1,10 @@
+*.user
+*.suo
+bin
+obj
+compile.bat
+*.sln.cache
+*.bak
+*.resources
+*~
+*.userprefs

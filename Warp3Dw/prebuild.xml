@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<Project frameworkVersion="v4_0" name="Warp3Dw" path="addon-modules/Warp3Dw/Modules" type="Library">
+  <Configuration name="Debug" platform="x86">
+	<Options>
+		<OutputPath>../../../bin/</OutputPath>
+		
+	</Options>
+  </Configuration>
+  <Configuration name="Release" platform="x86">
+	<Options>
+	  <OutputPath>../../../bin/</OutputPath>
+	  
+	</Options>
+  </Configuration>
+  <Configuration name="Debug" platform="x64">
+	<Options>
+	  <OutputPath>../../../bin/</OutputPath>
+	  
+	</Options>
+  </Configuration>
+  <Configuration name="Release" platform="x64">
+	<Options>
+	  <OutputPath>../../../bin/</OutputPath>
+	  
+	</Options>
+  </Configuration>
+  <Configuration name="Debug" platform="AnyCPU">
+	<Options>
+	  <OutputPath>../../../bin/</OutputPath>
+	  
+	</Options>
+  </Configuration>
+  <Configuration name="Release" platform="AnyCPU">
+	<Options>
+	  <OutputPath>../../../bin/</OutputPath>
+	  
+	</Options>
+  </Configuration>
+
+  <ReferencePath>../../../bin/</ReferencePath>
+  <Reference name="System"/>
+  <Reference name="System.Drawing"/>
+  <Reference name="System.Net"/>
+  <Reference name="System.Xml"/>
+  
+  <Files>
+	<Match pattern="*.cs" recurse="true">
+		<Exclude name="obj" pattern="obj"/>
+		<Exclude name="bin" pattern="*"/>
+	</Match>
+  </Files>
+</Project>

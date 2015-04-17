@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Warp3Dw</name>
+    </assembly>
+    <members>
+        <member name="T:Warp3Dw.warp_3ds_Importer">
+            <summary>
+            Summary description for warp_3ds_Importer.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Camera">
+            <summary>
+            Summary description for warp_Camera.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Color">
+            <summary>
+            Summary description for warp_Color.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_CoreObject">
+            <summary>
+            Summary description for warp_CoreObject.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Edge">
+            <summary>
+            Summary description for warp_Edge.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Environment">
+            <summary>
+            Summary description for warp_Environment.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Light">
+            <summary>
+            Summary description for warp_Light.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Lightmap">
+            <summary>
+            Summary description for warp_Lightmap.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Material">
+            <summary>
+            Summary description for warp_Material.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Math">
+            <summary>
+            Summary description for warp_Math.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Object">
+            <summary>
+            Summary description for warp_Object.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_ObjectFactory">
+            <summary>
+            Summary description for warp_ObjectFactory.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Rasterizer">
+            <summary>
+            Summary description for warp_Rasterizer.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_RenderPipeline">
+            <summary>
+            Summary description for warp_RenderPipeline.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Scene">
+            <summary>
+            Summary description for warp_Scene.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Screen">
+            <summary>
+            Summary description for warp_Screen.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Texture">
+            <summary>
+            Summary description for warp_Texture.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_TextureFactory">
+            <summary>
+            Summary description for warp_TextureFactory.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_TextureProjector">
+            <summary>
+            Summary description for warp_TextureProjector.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_TextureSettings">
+            <summary>
+            Summary description for warp_TextureSettings.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Triangle">
+            <summary>
+            Summary description for warp_Triangle.
+            </summary></member>
+        <member name="T:Warp3Dw.warp_Vertex">
+            <summary>
+            Summary description for warp_Vertex.
+            </summary></member>
+    </members>
+</doc>
