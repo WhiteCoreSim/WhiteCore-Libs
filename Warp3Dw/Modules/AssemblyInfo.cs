@@ -8,11 +8,11 @@ using System.Security.Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Warp3D")]
-[assembly: AssemblyDescription("Warp3d rendering - WhiteCore)]
+[assembly: AssemblyDescription("Warp3d rendering - WhiteCore‚Äù)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Peter Walser and Dean Lunz")]
 [assembly: AssemblyProduct("Warp3D")]
-[assembly: AssemblyCopyright("Copyright ©  2005")]
+[assembly: AssemblyCopyright("Copyright ÔøΩ  2005")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AllowPartiallyTrustedCallers]
