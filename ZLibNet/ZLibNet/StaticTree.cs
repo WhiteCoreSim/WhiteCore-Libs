@@ -46,7 +46,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * and contributors of zlib.
 */
 
-namespace ZLib.Net
+namespace ZLibNet
 {
 	
 	sealed class StaticTree

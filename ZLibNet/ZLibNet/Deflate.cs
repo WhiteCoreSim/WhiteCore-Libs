@@ -46,7 +46,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * and contributors of zlib.
 */
 using System;
-namespace ZLib.Net
+namespace ZLibNet
 {
 	
 	public sealed class Deflate
@@ -56,14 +56,14 @@ namespace ZLib.Net
 		
 		const int Z_DEFAULT_COMPRESSION = - 1;
 		
-		const int MAX_WBITS = 15; // 32K LZ77 window
+		const int MAX_WBITS = 15;       // 32K LZ77 window
 		const int DEF_MEM_LEVEL = 8;
 		
 		internal class Config
 		{
-			internal int good_length; // reduce lazy search above this match length
-			internal int max_lazy; // do not perform lazy search above this match length
-			internal int nice_length; // quit search above this match length
+			internal int good_length;   // reduce lazy search above this match length
+			internal int max_lazy;      // do not perform lazy search above this match length
+			internal int nice_length;   // quit search above this match length
 			internal int max_chain;
 			internal int func;
 			internal Config(int good_length, int max_lazy, int nice_length, int max_chain, int func)
@@ -81,7 +81,7 @@ namespace ZLib.Net
 		const int SLOW = 2;
 		static Config[] config_table;
 				
-		static readonly System.String[] z_errmsg = new System.String[]{"need dictionary", "stream end", "", "file error", "stream error", "data error", "insufficient memory", "buffer error", "incompatible version", ""};
+		static readonly String[] z_errmsg = new System.String[]{"need dictionary", "stream end", "", "file error", "stream error", "data error", "insufficient memory", "buffer error", "incompatible version", ""};
 		
 		// block not completed, need more input or more output
 		const int NeedMore = 0;

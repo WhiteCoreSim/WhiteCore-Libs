@@ -16,7 +16,7 @@
 
 
 
-namespace ZLib.Net
+namespace ZLibNet
 {
 	public class SupportClass
 	{

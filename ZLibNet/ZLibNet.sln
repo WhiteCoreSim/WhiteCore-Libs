@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLib.Net", "ZLib.Net\ZLib.Net.csproj", "{29C1E4C3-044E-491B-B8BD-B40844860396}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLibNet", "ZLibNet\ZLibNet.csproj", "{29C1E4C3-044E-491B-B8BD-B40844860396}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1EF16C4-F182-4EAC-9070-4E80DBF6323F}"
 EndProject
@@ -19,7 +19,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		description = WhiteCore build of AceCOmponents zlib.net
-		version = 1.0.4.1
+		description = @WhiteCore build of AceComponents zlib.net\nRenamed to avoid confusion, March 2016
+		version = 1.0.4.2
 	EndGlobalSection
 EndGlobal
