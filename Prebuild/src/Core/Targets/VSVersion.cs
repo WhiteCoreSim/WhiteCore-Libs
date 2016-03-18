@@ -57,6 +57,11 @@ namespace Prebuild.Core.Targets
 		/// <summary>
 		/// Visual Studio 2013 
 		/// </summary>
-		VS12
+		VS12,
+        /// <summary>
+        /// Visual Studio 2015 
+        /// </summary>
+        VS15
+
 	}
 }

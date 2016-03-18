@@ -68,8 +68,9 @@
 				<Match pattern="App.ico" buildAction="EmbeddedResource"/>
 				<Match path="data" pattern="prebuild-1.10.xsd" buildAction="EmbeddedResource"/>
 				<Match path="data" pattern="autotools.xml" buildAction="EmbeddedResource"/>
-				<Match pattern="*.cs" recurse="true"/>
-				<Exclude name="obj" pattern="obj"/>
+				<Match pattern="*.cs" recurse="true">
+					<Exclude name="obj" pattern="obj"/>
+				</Match>
 			</Files>
 		</Project>
 	</Solution>
