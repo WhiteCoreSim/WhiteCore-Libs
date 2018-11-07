@@ -102,13 +102,30 @@ namespace Prebuild.Core.Nodes
         /// </summary>
         v4_5_1,
         /// <summary>
-        /// .NET 4.6
-        /// </summary>
+        /// .NET 4.6 Windows 10 initial
+        /// </summary> 
         v4_6,
         /// <summary>
-        /// .NET 4.6.1
+        /// .NET 4.6.1 Windows 10 Nov 2015
         /// </summary>
-        v4_6_1
+        v4_6_1,
+        /// <summary>
+        /// .NET 4.6.2 Windows 10 Anniversary Update
+        /// </summary>
+        v4_6_2,
+        /// <summary>
+        /// .NET 4.7 Windows 10 Creators Update
+        /// </summary>
+        v4_7,
+        /// <summary>
+        /// .NET 4.7.1 Windows 10 Fall 2017 Creators Update 
+        /// </summary>
+        v4_7_1,
+        /// <summary>
+        /// .NET 4.7.2 Windows 10 April 2018 Update
+        /// </summary>
+        v4_7_2
+
     }
 	/// <summary>
 	/// The Node object representing /Prebuild/Solution/Project elements
