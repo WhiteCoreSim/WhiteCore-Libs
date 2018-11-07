@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -55,9 +55,9 @@ namespace Warp3Dw
 
 		public static warp_Object BOX (float xsize, float ysize, float zsize)
 		{
-			float x = (float)Math.Abs (xsize / 2);
-			float y = (float)Math.Abs (ysize / 2);
-			float z = (float)Math.Abs (zsize / 2);
+			float x = Math.Abs (xsize / 2);
+			float y = Math.Abs (ysize / 2);
+			float z = Math.Abs (zsize / 2);
 
 			float xx, yy, zz;
 
@@ -139,7 +139,7 @@ namespace Warp3Dw
 
 			for (int i = 1; i < segments - 1; i++)
 			{
-				angle = -(((float)i / (float)(segments - 2)) - 0.5f) *
+				angle = -(((float)i / (segments - 2)) - 0.5f) *
 				3.14159265f;
 				x = (float)Math.Cos (angle) * radius;
 				y = (float)Math.Sin (angle) * radius;
@@ -161,10 +161,10 @@ namespace Warp3Dw
 
 			for (int j = 0; j < steps; j++)
 			{
-				u = (float)(steps - j - 1) / (float)(steps - 1);
+				u = (steps - j - 1) / (float)(steps - 1);
 				for (int i = 0; i < nodes; i++)
 				{
-					v = (float)i / (float)(nodes - 1);
+					v = i / (float)(nodes - 1);
 					qx = (float)(path [i].x * Math.Cos (j * alpha) +
 					path [i].z * Math.Sin (j * alpha));
 					qz = (float)(path [i].z * Math.Cos (j * alpha) -
@@ -206,7 +206,7 @@ namespace Warp3Dw
 			warp_Vector[] path = new warp_Vector[segments + 1];
 			for (int i = 0; i < segments + 1; i++)
 			{
-				t = 2 * 3.14159265f * i / (float)segments;
+				t = 2 * 3.14159265f * i / segments;
 				r = r_out + r_in * warp_Math.cos (p * t);
 				z = h * warp_Math.sin (p * t);
 				theta = q * t;
@@ -226,7 +226,7 @@ namespace Warp3Dw
 			warp_Vector[] path = new warp_Vector[segments + 1];
 			for (int i = 0; i < segments + 1; i++)
 			{
-				t = (float)i / (float)segments;
+				t = i / (float)segments;
 				r = r_out + r_in * warp_Math.sin (2 * 3.14159265f * f * t);
 				z = (h / 2) + h * t;
 				theta = 2 * 3.14159265f * w * t;
@@ -243,7 +243,7 @@ namespace Warp3Dw
 			float angle;
 			for (int i = 0; i < steps; i++)
 			{
-				angle = 2 * 3.14159265f * (float)i / (float)steps;
+                angle = 2 * 3.14159265f * (i / (float)steps);
 				circle [i] = new warp_Vector (r * warp_Math.cos (angle),
 					r * warp_Math.sin (angle), 0f);
 			}
@@ -283,10 +283,10 @@ namespace Warp3Dw
 
 				// Add nodes
 
-				relx = (float)i / (float)(segments - 1);
+				relx = i / (float)(segments - 1);
 				for (int k = 0; k < steps; k++)
 				{
-					rely = (float)k / (float)steps;
+					rely = k / (float)steps;
 					tempvertex = new warp_Vertex (circle [k].transform (frenetmatrix));
 					tempvertex.u = relx;
 					tempvertex.v = rely;

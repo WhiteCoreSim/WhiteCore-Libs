@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -39,13 +39,13 @@ namespace Warp3Dw
 
 			handle = GCHandle.Alloc (pixels, GCHandleType.Pinned);
 			IntPtr pointer = Marshal.UnsafeAddrOfPinnedArrayElement (pixels, 0);
-			
+
 			image = new Bitmap (w, h, w * 4, PixelFormat.Format32bppPArgb, pointer);
 		}
 
 		public void clear (int c)
 		{
-			warp_Math.clearBuffer (pixels, unchecked((int)0xff000000) | c);			
+			warp_Math.clearBuffer (pixels, unchecked((int)0xff000000) | c);
 		}
 
 		public void draw (warp_Texture texture, int posx, int posy, int xsize, int ysize)
@@ -63,7 +63,7 @@ namespace Warp3Dw
 			return image;
 		}
 
-		void draw (int width, int height, warp_Texture texture, int posx, int posy, int xsize, int ysize)
+        void draw (int drawwidth, int drawheight, warp_Texture texture, int posx, int posy, int xsize, int ysize)
 		{
 			if (texture == null)
 			{
@@ -81,17 +81,17 @@ namespace Warp3Dw
 			int dty = ty / h;
 			int txBase = warp_Math.crop (-xBase * dtx, 0, 255 * tx);
 			int tyBase = warp_Math.crop (-yBase * dty, 0, 255 * ty);
-			int xend = warp_Math.crop (xBase + w, 0, width);
-			int yend = warp_Math.crop (yBase + h, 0, height);
+			int xend = warp_Math.crop (xBase + w, 0, drawwidth);
+			int yend = warp_Math.crop (yBase + h, 0, drawheight);
 			int offset1, offset2;
-			xBase = warp_Math.crop (xBase, 0, width);
-			yBase = warp_Math.crop (yBase, 0, height);
+			xBase = warp_Math.crop (xBase, 0, drawwidth);
+			yBase = warp_Math.crop (yBase, 0, drawheight);
 
 			ty = tyBase;
 			for (int j = yBase; j < yend; j++)
 			{
 				tx = txBase;
-				offset1 = j * width;
+				offset1 = j * drawwidth;
 				offset2 = (ty >> 8) * tw;
 				for (int i = xBase; i < xend; i++)
 				{
@@ -107,7 +107,7 @@ namespace Warp3Dw
 			add (width, height, texture, posx, posy, xsize, ysize);
 		}
 
-		void add (int width, int height, warp_Texture texture, int posx, int posy, int xsize, int ysize)
+        void add (int addwidth, int addheight, warp_Texture texture, int posx, int posy, int xsize, int ysize)
 		{
 			if (texture == null)
 			{
@@ -125,17 +125,17 @@ namespace Warp3Dw
 			int dty = ty / h;
 			int txBase = warp_Math.crop (-xBase * dtx, 0, 255 * tx);
 			int tyBase = warp_Math.crop (-yBase * dty, 0, 255 * ty);
-			int xend = warp_Math.crop (xBase + w, 0, width);
-			int yend = warp_Math.crop (yBase + h, 0, height);
+			int xend = warp_Math.crop (xBase + w, 0, addwidth);
+			int yend = warp_Math.crop (yBase + h, 0, addheight);
 			int offset1, offset2;
-			xBase = warp_Math.crop (xBase, 0, width);
-			yBase = warp_Math.crop (yBase, 0, height);
+			xBase = warp_Math.crop (xBase, 0, addwidth);
+			yBase = warp_Math.crop (yBase, 0, addheight);
 
 			ty = tyBase;
 			for (int j = yBase; j < yend; j++)
 			{
 				tx = txBase;
-				offset1 = j * width;
+				offset1 = j * addwidth;
 				offset2 = (ty >> 8) * tw;
 				for (int i = xBase; i < xend; i++)
 				{

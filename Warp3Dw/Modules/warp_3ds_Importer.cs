@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -25,7 +25,7 @@ namespace Warp3Dw
 		int currentJunkId;
 		int nextJunkOffset;
 
-		String currentObjectName;
+		string currentObjectName;
 		warp_Object currentObject;
 		bool endOfStream;
 
@@ -35,15 +35,17 @@ namespace Warp3Dw
 		{
 		}
 
-        public Hashtable importFromFile( string name, String path )
+        public Hashtable importFromFile( string name, string path )
 		{
             Stream fs;
             _objects.Clear();
 
-            if ( path.StartsWith( "http" ) )
+            if (path.StartsWith ("http", StringComparison.OrdinalIgnoreCase))
             {
                 WebRequest webrq = WebRequest.Create( path );
-                fs = webrq.GetResponse().GetResponseStream() ;
+                var response = webrq.GetResponse ();
+                fs = response.GetResponseStream() ;
+                response.Dispose ();
             }
             else
             {
@@ -57,13 +59,13 @@ namespace Warp3Dw
         public Hashtable importFromStream( string name, BinaryReader inStream )
 		{
             _objects.Clear();
-	
+
 			readJunkHeader(inStream);
 			if (currentJunkId != 0x4D4D)
 			{
 				return null;
 			}
-			
+
 			try
 			{
 				for (;;)
@@ -80,7 +82,7 @@ namespace Warp3Dw
 
             return _objects;
 		}
-	
+
 		void readJunkHeader(BinaryReader inStream)
 		{
 			currentJunkId = readShort(inStream);
@@ -88,12 +90,12 @@ namespace Warp3Dw
 			endOfStream = currentJunkId < 0;
 		}
 
-		int readInt(BinaryReader inStream) 
+		int readInt(BinaryReader inStream)
 		{
 			return inStream.ReadByte() | (inStream.ReadByte() << 8) | (inStream.ReadByte() << 16) | (inStream.ReadByte() << 24);
 		}
 
-		int readShort(BinaryReader inStream) 
+		int readShort(BinaryReader inStream)
 		{
 			return (inStream.ReadByte() | (inStream.ReadByte() << 8));
 		}
@@ -106,9 +108,9 @@ namespace Warp3Dw
 			{
 				return;
 			}
-	
+
 			if (currentJunkId == 0x4000 /* object block */)
-			{ 
+			{
 				currentObjectName = readString(inStream);
 				return;
 			}
@@ -122,19 +124,19 @@ namespace Warp3Dw
 			}
 
 			if (currentJunkId == 0x4110 /* vertex list */)
-			{ 
+			{
 				readVertexList(inStream);
 				return;
 			}
 
 			if (currentJunkId == 0x4120 /* point list */)
-			{ 
+			{
 				readPointList(inStream);
 				return;
 			}
 
-			if (currentJunkId == 0x4140 /* mapping coordinates */) 
-			{ 
+			if (currentJunkId == 0x4140 /* mapping coordinates */)
+			{
 				readMappingCoordinates(inStream);
 				return;
 			}
@@ -146,7 +148,7 @@ namespace Warp3Dw
 		{
 			string result = "";
 			byte inByte;
-			while ( (inByte = (byte) inStream.ReadByte()) != 0)
+			while ( (inByte = inStream.ReadByte ()) != 0)
 			{
 				result += (char) inByte;
 			}
@@ -154,7 +156,7 @@ namespace Warp3Dw
 			return result;
 		}
 
-		float readFloat(BinaryReader inStream) 
+		float readFloat(BinaryReader inStream)
 		{
 			int bits = readInt(inStream);
 
@@ -162,21 +164,21 @@ namespace Warp3Dw
 			int e = ((bits >> 23) & 0xff);
 			int m = (e == 0) ? (bits & 0x7fffff) << 1 :	(bits & 0x7fffff) | 0x800000;
 
-            double v = (double)s * (double)m * (Math.Pow(2, e - 150));
+            double v = s * (double)m * (Math.Pow(2, e - 150));
 
             return (float)v;
         }
 
         void skipJunk(BinaryReader inStream)
         {
-            try
-            {
-                for (int i = 0; (i < nextJunkOffset - 6) && (!endOfStream); i++)
-                {
-                    endOfStream = inStream.ReadByte() < 0;
+            try {
+                for (int i = 0; (i < nextJunkOffset - 6) && (!endOfStream); i++) {
+                    endOfStream = inStream.ReadByte () < 0;
                 }
+            } catch (Exception) {
+                endOfStream = true;
             }
-            catch (Exception) { endOfStream = true; };
+
         }
 
 		void readVertexList(BinaryReader inStream)
@@ -193,7 +195,7 @@ namespace Warp3Dw
 			}
 		}
 
-		void readPointList(BinaryReader inStream) 
+		void readPointList(BinaryReader inStream)
 		{
 			int v1, v2, v3;
 			int triangles = readShort(inStream);

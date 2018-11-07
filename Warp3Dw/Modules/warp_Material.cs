@@ -4,13 +4,12 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
-using System;
 using System.Drawing;
 using System.IO;
 
@@ -30,8 +29,8 @@ namespace Warp3Dw
 		public bool flat = false;
 		public bool wireframe = false;
 		public bool opaque = true;
-		public String texturePath = null;
-		public String envmapPath = null;
+		public string texturePath = null;
+		public string envmapPath = null;
 		public warp_TextureSettings textureSettings = null;
 		public warp_TextureSettings envmapSettings = null;
 		public double rwx = 500.00;
@@ -57,7 +56,7 @@ namespace Warp3Dw
 			reflectivity = 255;
 		}
 
-		public warp_Material (String path)
+		public warp_Material (string path)
 		{
 
 			FileStream fs = new FileStream (path, FileMode.Open);
@@ -90,7 +89,7 @@ namespace Warp3Dw
 		{
 			string result = "";
 			byte inByte;
-			while ((inByte = (byte)inStream.ReadByte ()) != 60)
+			while ((inByte = inStream.ReadByte ()) != 60)
 			{
 				result += (char)inByte;
 			}
@@ -125,7 +124,7 @@ namespace Warp3Dw
 			{
 				int w = readInt (inStream);
 				int h = readInt (inStream);
-				int type = inStream.ReadSByte ();
+                int texType = inStream.ReadSByte ();
 
 				float persistency = readInt (inStream);
 				float density = readInt (inStream);
@@ -141,15 +140,15 @@ namespace Warp3Dw
 					colors [i] = readInt (inStream);
 
 				}
-				if (type == 1)
+				if (texType == 1)
 				{
 					t = warp_TextureFactory.PERLIN (w, h, persistency, density, samples, 1024).colorize (warp_Color.makeGradient (colors, 1024));
 				}
-				if (type == 2)
+				if (texType == 2)
 				{
 					t = warp_TextureFactory.WAVE (w, h, persistency, density, samples, 1024).colorize (warp_Color.makeGradient (colors, 1024));
 				}
-				if (type == 3)
+				if (texType == 3)
 				{
 					t = warp_TextureFactory.GRAIN (w, h, persistency, density, samples, 20, 1024).colorize (warp_Color.makeGradient (colors, 1024));
 
@@ -158,12 +157,12 @@ namespace Warp3Dw
 				if (textureId)
 				{
 					texturePath = null;
-					textureSettings = new warp_TextureSettings (t, w, h, type, persistency, density, samples, colors);
+					textureSettings = new warp_TextureSettings (t, w, h, texType, persistency, density, samples, colors);
 					setTexture (t);
 				} else
 				{
 					envmapPath = null;
-					envmapSettings = new warp_TextureSettings (t, w, h, type, persistency, density, samples, colors);
+					envmapSettings = new warp_TextureSettings (t, w, h, texType, persistency, density, samples, colors);
 					setEnvmap (t);
 				}
 			}

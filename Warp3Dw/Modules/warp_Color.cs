@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -19,32 +19,32 @@ namespace Warp3Dw
 	/// </summary>
 	public static class warp_Color
 	{
-		public const int ALPHA = unchecked((int)0xFF000000);   // alpha mask
-        public const int RED = unchecked((int)0xFF0000);  	   // red mask
-        public const int GREEN = unchecked((int)0xFF00);  	   // green mask
-        public const int BLUE = unchecked((int)0xFF);  		   // blue mask
-        public const int MASK7Bit = unchecked((int)0xFEFEFF);  // mask for additive/subtractive shading
-        public const int MASK6Bit = unchecked((int)0xFCFCFC);  // mask for additive/subtractive shading
-        public const int RGB = unchecked((int)0xFFFFFF);  	   // rgb mask
+		public const int ALPHA = unchecked((int)0xFF000000);    // alpha mask
+        public const int RED = unchecked(0xFF0000);  	        // red mask
+        public const int GREEN = unchecked(0xFF00);  	        // green mask
+        public const int BLUE = unchecked(0xFF);  		        // blue mask
+        public const int MASK7Bit = unchecked(0xFEFEFF);        // mask for additive/subtractive shading
+        public const int MASK6Bit = unchecked(0xFCFCFC);        // mask for additive/subtractive shading
+        public const int RGB = unchecked(0xFFFFFF);  	        // rgb mask
 
 		public static int random(int color, int delta)
 		{
-			Random rnd = new Random();
+			var rnd = new Random();
 
 			int r = (color >> 16) & 255;
 			int g = (color >> 8) & 255;
 			int b = color & 255;
-			
+
 			r += (int) (rnd.NextDouble() * (float) delta);
 			g += (int) (rnd.NextDouble() * (float) delta);
 			b += (int) (rnd.NextDouble() * (float) delta);
-			
+
 			return getCropColor(r, g, b);
 		}
 
 		public static int random()
 		{
-			Random rnd = new Random();
+			var rnd = new Random();
 			return (int) (rnd.NextDouble() * 16777216);
 		}
 
@@ -85,12 +85,12 @@ namespace Warp3Dw
 				pos1 = size * c / (colors.GetLength(0) - 1);
 				pos2 = size * (c + 1) / (colors.GetLength(0) - 1);
 				range = pos2 - pos1;
-				r1 = warp_Color.getRed(c1) << 16;
-				g1 = warp_Color.getGreen(c1) << 16;
-				b1 = warp_Color.getBlue(c1) << 16;
-				r2 = warp_Color.getRed(c2) << 16;
-				g2 = warp_Color.getGreen(c2) << 16;
-				b2 = warp_Color.getBlue(c2) << 16;
+				r1 = getRed (c1) << 16;
+				g1 = getGreen (c1) << 16;
+				b1 = getBlue(c1) << 16;
+				r2 = getRed(c2) << 16;
+				g2 = getGreen(c2) << 16;
+				b2 = getBlue(c2) << 16;
 				dr = (r2 - r1) / range;
 				dg = (g2 - g1) / range;
 				db = (b2 - b1) / range;

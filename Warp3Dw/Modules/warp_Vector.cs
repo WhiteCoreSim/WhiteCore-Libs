@@ -6,7 +6,7 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -19,19 +19,23 @@ namespace Warp3Dw
 		public float x;		//Cartesian (default)
 		public float y;		//Cartesian (default)
 		public float z;		//Cartesian (default)
+		public float r;      //Cylindric
+		public float theta;  //Cylindric
 		
 		public warp_Vector (float xpos, float ypos, float zpos)
 		{
 			x = xpos;
 			y = ypos;
 			z = zpos;
+            r = 0;
+            theta = 0;
 		}
 
 		public warp_Vector normalize ()
 			// Normalizes the vector
 		{
 			float dist = length ();
-			if (dist == 0f)
+            if (warp_Math.FloatApproxEqual(dist, 0f))
 				return this;
 			float invdist = 1f / dist;
 			x *= invdist;
@@ -65,6 +69,19 @@ namespace Warp3Dw
 			return new warp_Vector (newx, newy, newz);
 		}
 
+		public void buildCylindric()
+			// Builds the cylindric coordinates out of the given cartesian coordinates
+		{
+			r=(float)Math.Sqrt(x*x+y*y);
+			theta=(float)Math.Atan2(x,y);
+		}
+
+		public void buildCartesian()
+			// Builds the cartesian coordinates out of the given cylindric coordinates
+		{
+			x=r*warp_Math.cos(theta);
+			y=r*warp_Math.sin(theta);
+		}
 		public static warp_Vector getNormal (warp_Vector a, warp_Vector b)
 			// returns the normal vector of the plane defined by the two vectors
 		{
@@ -112,7 +129,7 @@ namespace Warp3Dw
 			a.y += b.y;
 			a.z += b.z;
 
-			return a;
+			return a;    // maybe should return a new vector?
 		}
 
 		public static warp_Vector sub (warp_Vector a, warp_Vector b)
@@ -122,7 +139,7 @@ namespace Warp3Dw
 			a.y -= b.y;
 			a.z -= b.z;
 
-			return a;
+			return a;    // maybe should return a new vector?
 		}
 
 		public static warp_Vector scale (float f, warp_Vector a)
@@ -132,9 +149,14 @@ namespace Warp3Dw
 			a.y *= f;
 			a.z *= f;
 
-			return a;
+			return a;    // maybe should return a new vector?
 		}
 
+		public static float len(warp_Vector a)
+			// length of vector
+		{
+			return (float)Math.Sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
+		}
 		public static readonly warp_Vector Zero = new warp_Vector ();
 		public static readonly warp_Vector UnitX = new warp_Vector (1f, 0f, 0f);
 		public static readonly warp_Vector UnitY = new warp_Vector (0f, 1f, 0f);

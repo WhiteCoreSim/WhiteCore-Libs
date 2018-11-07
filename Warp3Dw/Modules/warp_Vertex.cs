@@ -6,7 +6,7 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -42,6 +42,7 @@ namespace Warp3Dw
 		internal float sw = 1.0f;
 
 		internal int clipcode;
+        internal bool visible;
 		internal int id;				// Vertex index
 
 		internal List<warp_Triangle> neighbor;
@@ -82,14 +83,17 @@ namespace Warp3Dw
 			pos2 = pos.transform (vertexProjection);
 			n2 = n.transform (normalProjection);
 
-			float fact;
+			//old float fact;
 			if (camera.isOrthographic)
 			{
-				x = (int)(pos2.x * (camera.screenscale / camera.orthoViewWidth) + (camera.screenwidth >> 1));
-				y = (int)(-pos2.y * (camera.screenscale / camera.orthoViewHeight) + (camera.screenheight >> 1));
+				//old x = (int)(pos2.x * (camera.screenscale / camera.orthoViewWidth) + (camera.screenwidth >> 1));
+				//old y = (int)(-pos2.y * (camera.screenscale / camera.orthoViewHeight) + (camera.screenheight >> 1));
+			    x=(int)(pos2.x * camera.EfectiveFovFactX + (camera.screenwidth >> 1));
+			    y=(int)(-pos2.y * camera.EfectiveFovFactY + (camera.screenheight >> 1));
 			} else
 			{
-				fact = camera.screenscale / camera.fovfact / ((pos2.z > 0.1) ? pos2.z : 0.1f);
+				// old fact = camera.screenscale / camera.fovfact / ((pos2.z > 0.1) ? pos2.z : 0.1f);
+			    float fact = camera.EfectiveFovFactX / ((pos2.z > 0.1) ? pos2.z : 0.1f);
 				x = (int)(pos2.x * fact + (camera.screenwidth >> 1));
 				y = (int)(-pos2.y * fact + (camera.screenheight >> 1));
 			}
@@ -102,8 +106,8 @@ namespace Warp3Dw
 				return;
 			if (parent.material.texture == null)
 				return;
-			tx = (int)((float)parent.material.texture.width * u);
-			ty = (int)((float)parent.material.texture.height * v);
+			tx = (int)(parent.material.texture.width * u);
+			ty = (int)(parent.material.texture.height * v);
 		}
 
 		public void setUV (float u, float v)
@@ -126,6 +130,7 @@ namespace Warp3Dw
 				clipcode |= 8;
 			if (pos2.z < 0)
 				clipcode |= 16;
+			visible = (clipcode == 0);
 		}
 
 		public void registerNeighbor (warp_Triangle triangle)
@@ -145,19 +150,19 @@ namespace Warp3Dw
 		public void regenerateNormal ()
 		{
 			warp_Vector wn;
-			float nx = 0f;
-			float ny = 0f;
-			float nz = 0f;
+            float rgnx = 0f;
+            float rgny = 0f;
+            float rgnz = 0f;
 
 			for (int i = 0; i < neighbor.Count; i++)
 			{
 				wn = neighbor [i].getWeightedNormal ();
-				nx += wn.x;
-				ny += wn.y;
-				nz += wn.z;
+				rgnx += wn.x;
+				rgny += wn.y;
+				rgnz += wn.z;
 			}
 
-			n = new warp_Vector (nx, ny, nz).normalize ();
+			n = new warp_Vector (rgnx, rgny, rgnz).normalize ();
 		}
 
 		public void scaleTextureCoordinates (float fx, float fy)
@@ -185,7 +190,9 @@ namespace Warp3Dw
 
 		public bool equals (warp_Vertex v)
 		{
-			return ((pos.x == v.pos.x) && (pos.y == v.pos.y) && (pos.z == v.pos.z));
+            return (warp_Math.FloatApproxEqual(pos.x, v.pos.x) &&
+                    warp_Math.FloatApproxEqual(pos.y, v.pos.y) &&
+                    warp_Math.FloatApproxEqual(pos.z, v.pos.z));
 		}
 
 		public bool equals (warp_Vertex v, float tolerance)

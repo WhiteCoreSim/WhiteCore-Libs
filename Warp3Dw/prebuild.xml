@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Project frameworkVersion="v4_0" name="Warp3Dw" path="addon-modules/Warp3Dw/Modules" type="Library">
+<Project frameworkVersion="v4_5" name="Warp3Dw" path="addon-modules/Warp3Dw/Modules" type="Library">
   <Configuration name="Debug" platform="x86">
 	<Options>
 		<OutputPath>../../../bin/</OutputPath>

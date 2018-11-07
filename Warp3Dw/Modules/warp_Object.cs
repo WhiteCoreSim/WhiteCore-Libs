@@ -6,11 +6,10 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
-using System;
 using System.Collections.Generic;
 
 namespace Warp3Dw
@@ -20,9 +19,12 @@ namespace Warp3Dw
 	/// </summary>
 	public class warp_Object : warp_CoreObject
 	{
-		public Object userData;
+        bool dirty = true;
+        // Flag for dirty handling
+      
+        public object userData;
 		// Can be freely used
-		public String user;
+		public string user;
 		// Can be freely used
 
 		public List<warp_Vertex> vertexData;
@@ -30,14 +32,12 @@ namespace Warp3Dw
 
 		public int id;
 		// This object's index
-		public String name;
+		public string name;
 		// This object's name
-		public bool visible;
+		public bool visible = true;
 		// Visibility tag
 		public bool projected;
 		public warp_Scene parent;
-		private bool dirty;
-		// Flag for dirty handling
 
 		public warp_Vertex[] fastvertex;
 		public warp_Triangle[] fasttriangle;
@@ -55,7 +55,7 @@ namespace Warp3Dw
 			vertexData = new List<warp_Vertex> ();
 			triangleData = new List<warp_Triangle> ();
 
-			name = String.Empty;
+			name = string.Empty;
 			dirty = true;
 			visible = true;
 		}
@@ -65,7 +65,7 @@ namespace Warp3Dw
 			vertexData = new List<warp_Vertex> (vertexCount);
 			triangleData = new List<warp_Triangle> (triangleCount);
 
-			name = String.Empty;
+			name = string.Empty;
 			dirty = true;
 			visible = true;
 		}
@@ -217,10 +217,10 @@ namespace Warp3Dw
 			rebuild ();
 			for (int j = 0, p = 0; j < h; j++)
 			{
-				float v = ((float)j / (float)(h - 1)) * sy;
+				float v = j / (float)(h - 1) * sy;
 				for (int i = 0; i < w; i++)
 				{
-					float u = ((float)i / (float)(w - 1)) * sx;
+					float u = i / (float)(w - 1) * sx;
 					fastvertex [p++].setUV (u, v);
 				}
 			}
@@ -326,6 +326,20 @@ namespace Warp3Dw
 			normalmatrix.reset ();
 		}
 
+		public void destroy()
+        {
+		    name = null;
+			material = null;
+			matrix = null;
+			normalmatrix = null;
+            parent = null;
+
+            fastvertex = null;
+            fasttriangle = null;
+    		vertexData.Clear();
+		    triangleData.Clear();
+
+        }   
 		//public warp_Object getClone()
 		//{
 		//    warp_Object obj=new warp_Object();

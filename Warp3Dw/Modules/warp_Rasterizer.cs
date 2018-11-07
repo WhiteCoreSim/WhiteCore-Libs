@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -43,10 +43,10 @@ namespace Warp3Dw
 		int tw;
 		int th;
 		int tbitW;
-		int tbitH;
+        // not used  -greythane- 20160707 //int tbitH;
 
-		// Rasterizer hints
-		int mode;
+        // Rasterizer hints
+        int mode;
 		int shaded;
 
 		warp_Vertex p1, p2, p3, tempVertex;
@@ -126,7 +126,7 @@ namespace Warp3Dw
 				tw = texture.width - 1;
 				th = texture.height - 1;
 				tbitW = texture.bitWidth;
-				tbitH = texture.bitHeight;
+                // not used -greythane - 20160707 //tbitH = texture.bitHeight;
 			}
 
 			mode = 0;
@@ -253,7 +253,7 @@ namespace Warp3Dw
 			nx4 = nx1 + ((nx3 - nx1) >> 8) * temp;
 			ny4 = ny1 + ((ny3 - ny1) >> 8) * temp;
 
-			float tf = (float)(y2 - y1) / (float)(y3 - y1);
+			float tf = (y2 - y1) / (float)(y3 - y1);
 
 			tx4 = tx1 + ((tx3 - tx1) * tf);
 			ty4 = ty1 + ((ty3 - ty1) * tf);
@@ -437,7 +437,7 @@ namespace Warp3Dw
 				}
 				z += dz;
 			}
-            
+
 		}
 
 		void renderLineP ()
@@ -464,7 +464,7 @@ namespace Warp3Dw
 				nx += dnx;
 				ny += dny;
 			}
-            
+
 		}
 
 		void renderLineE ()
@@ -554,11 +554,11 @@ namespace Warp3Dw
 					c = texture.pixel [(((int)(tx / sw)) & tw) + ((((int)(ty / sw)) & th) << tbitW)];
 					c = warp_Color.multiply (c, diffuse [lutID]);
 					s = warp_Color.scale (specular [lutID], reflectivity);
-					c = warp_Color.transparency (bkgrd, c, transparency);						
+					c = warp_Color.transparency (bkgrd, c, transparency);
 					c = warp_Color.add (c, s);
 					screen.pixels [pos] = c;
 					zBuffer [pos] = z;
-						
+
 					if (useIdBuffer)
 						idBuffer [pos] = currentId;
 				}
@@ -609,23 +609,23 @@ namespace Warp3Dw
 			drawLine (tri.p3, tri.p1, defaultcolor);
 		}
 
-		void drawLine (warp_Vertex a, warp_Vertex b, int color)
+        void drawLine (warp_Vertex a, warp_Vertex b, int lineColor)
 		{
-			warp_Vertex temp;
+            warp_Vertex tmpVertex;
 			if ((a.clipcode & b.clipcode) != 0)
 				return;
 
-			dx = (int)Math.Abs (a.x - b.x);
-			dy = (int)Math.Abs (a.y - b.y);
+			dx = Math.Abs (a.x - b.x);
+			dy = Math.Abs (a.y - b.y);
 			dz = 0;
 
 			if (dx > dy)
 			{
 				if (a.x > b.x)
 				{
-					temp = a;
+					tmpVertex = a;
 					a = b;
-					b = temp;
+					b = tmpVertex;
 				}
 				if (dx > 0)
 				{
@@ -643,7 +643,7 @@ namespace Warp3Dw
 						if (z < zBuffer [x + offset])
 						{
 							{
-								screen.pixels [x + offset] = color;
+								screen.pixels [x + offset] = lineColor;
 								zBuffer [x + offset] = z;
 							}
 						}
@@ -657,9 +657,9 @@ namespace Warp3Dw
 			{
 				if (a.y > b.y)
 				{
-					temp = a;
+					tmpVertex = a;
 					a = b;
-					b = temp;
+					b = tmpVertex;
 				}
 				if (dy > 0)
 				{
@@ -677,7 +677,7 @@ namespace Warp3Dw
 						if (z < zBuffer [x2 + offset])
 						{
 							{
-								screen.pixels [x2 + offset] = color;
+								screen.pixels [x2 + offset] = lineColor;
 								zBuffer [x2 + offset] = z;
 							}
 						}

@@ -6,7 +6,7 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -20,7 +20,10 @@ namespace Warp3Dw
 	/// 
 	public class warp_Camera
 	{
-		public warp_Matrix matrix = new warp_Matrix ();
+        internal float EfectiveFovFactX;
+        internal float EfectiveFovFactY;
+	
+	public warp_Matrix matrix = new warp_Matrix ();
 		public warp_Matrix normalmatrix = new warp_Matrix ();
 
 		public bool isOrthographic;
@@ -80,10 +83,20 @@ namespace Warp3Dw
 			warp_Vector forward, up, right;
 
 			forward = warp_Vector.sub (lookat, pos);
-			up = new warp_Vector (0f, 1f, 0f);
-			right = warp_Vector.getNormal (up, forward);
-			up = warp_Vector.getNormal (forward, right);
-
+            if(Math.Abs(forward.x) < 0.001f && Math.Abs(forward.z) < 0.001f)
+            {
+                right = new warp_Vector(1f, 0f, 0f);
+                if(forward.y < 0)
+                    up = new warp_Vector(0f, 0f, 1f);
+                else
+                    up = new warp_Vector(0f, 0f, -1f);
+            }
+            else
+            {
+			    up = new warp_Vector (0f, 1f, 0f);
+			    right = warp_Vector.getNormal (up, forward);
+			    up = warp_Vector.getNormal (forward, right);
+            }
 			forward.normalize ();
 			up.normalize ();
 			right.normalize ();
@@ -99,7 +112,22 @@ namespace Warp3Dw
 		public void setFov (float fov)
 		{
 			fovfact = (float)Math.Tan (warp_Math.deg2rad (fov) / 2);
+            isOrthographic = false;
 		}
+
+        public void setOrthographic(bool doOrtho, float orthoWitdh, float orthoHeight)
+        {
+            if(doOrtho && orthoWitdh != 0f && orthoHeight != 0f)
+            {
+                orthoViewWidth = orthoWitdh;
+                orthoViewHeight = orthoHeight;
+                isOrthographic = true;
+            }
+            else
+            {
+                isOrthographic = false;
+            }      
+        }
 
 		public void roll (float angle)
 		{
@@ -136,6 +164,15 @@ namespace Warp3Dw
 			screenwidth = w;
 			screenheight = h;
 			screenscale = (w < h) ? w : h;
+            if(isOrthographic)
+            {
+                EfectiveFovFactX = screenscale / orthoViewWidth;
+                EfectiveFovFactY = screenscale / orthoViewHeight;
+            }
+            else
+            {
+                EfectiveFovFactX = screenscale/fovfact;
+            }      
 		}
 
 		public void shift (float dx, float dy, float dz)

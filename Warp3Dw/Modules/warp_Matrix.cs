@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -111,7 +111,7 @@ namespace Warp3Dw
 		{
 			warp_Matrix m = new warp_Matrix ();
 
-   
+
 			float xx = quat.X * quat.X;
 			float xy = quat.X * quat.Y;
 			float xz = quat.X * quat.Z;
@@ -134,7 +134,7 @@ namespace Warp3Dw
 
 			m.m03 = m.m13 = m.m23 = m.m30 = m.m31 = m.m32 = 0;
 			m.m33 = 1;
-            
+
 			return m;
 		}
 
@@ -143,8 +143,8 @@ namespace Warp3Dw
 
 			reset ();
 
-			warp_Matrix temp = warp_Matrix.quaternionMatrix (quat);
-			warp_Matrix result = warp_Matrix.multiply (this, temp);
+			warp_Matrix temp = quaternionMatrix (quat);
+			warp_Matrix result = multiply (this, temp);
 
 			return result;
 		}
@@ -152,7 +152,7 @@ namespace Warp3Dw
 		public static warp_Matrix scaleMatrix (float dx, float dy, float dz)
 		{
 			warp_Matrix m = new warp_Matrix ();
-			
+
 			m.m00 = dx;
 			m.m11 = dy;
 			m.m22 = dz;
@@ -162,7 +162,7 @@ namespace Warp3Dw
 
 		public static warp_Matrix scaleMatrix (float d)
 		{
-			return warp_Matrix.scaleMatrix (d, d, d);
+			return scaleMatrix (d, d, d);
 		}
 
 		public static warp_Matrix rotateMatrix (float dx, float dy, float dz)
@@ -172,7 +172,7 @@ namespace Warp3Dw
 			float SIN;
 			float COS;
 
-			if (dx != 0)
+            if (!warp_Math.FloatApproxEqual(dx, 0))
 			{
 				warp_Matrix m = new warp_Matrix ();
 				SIN = warp_Math.sin (dx);
@@ -181,10 +181,10 @@ namespace Warp3Dw
 				m.m12 = SIN;
 				m.m21 = -SIN;
 				m.m22 = COS;
-				
+
 				res.transform (m);
 			}
-			if (dy != 0)
+            if (!warp_Math.FloatApproxEqual(dy, 0))
 			{
 				warp_Matrix m = new warp_Matrix ();
 				SIN = warp_Math.sin (dy);
@@ -193,10 +193,10 @@ namespace Warp3Dw
 				m.m02 = SIN;
 				m.m20 = -SIN;
 				m.m22 = COS;
-				
+
 				res.transform (m);
 			}
-			if (dz != 0)
+            if (!warp_Math.FloatApproxEqual(dz, 0))
 			{
 				warp_Matrix m = new warp_Matrix ();
 				SIN = warp_Math.sin (dz);
@@ -205,7 +205,7 @@ namespace Warp3Dw
 				m.m01 = SIN;
 				m.m10 = -SIN;
 				m.m11 = COS;
-				
+
 				res.transform (m);
 			}
 
@@ -214,7 +214,7 @@ namespace Warp3Dw
 
 		public void shift (float dx, float dy, float dz)
 		{
-            
+
 			transform (shiftMatrix (dx, dy, dz));
 		}
 
@@ -276,7 +276,7 @@ namespace Warp3Dw
 
 		public void transform (warp_Matrix n)
 		{
-			warp_Matrix m = this.getClone ();
+			warp_Matrix m = getClone ();
 
 			m00 = n.m00 * m.m00 + n.m01 * m.m10 + n.m02 * m.m20;
 			m01 = n.m00 * m.m01 + n.m01 * m.m11 + n.m02 * m.m21;
@@ -294,7 +294,7 @@ namespace Warp3Dw
 
 		public void preTransform (warp_Matrix n)
 		{
-			warp_Matrix m = this.getClone ();
+			warp_Matrix m = getClone ();
 
 			m00 = m.m00 * n.m00 + m.m01 * n.m10 + m.m02 * n.m20;
 			m01 = m.m00 * n.m01 + m.m01 * n.m11 + m.m02 * n.m21;
@@ -326,7 +326,7 @@ namespace Warp3Dw
 			m.m21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21;
 			m.m22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22;
 			m.m23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23;
-			
+
 			return m;
 		}
 
@@ -356,7 +356,7 @@ namespace Warp3Dw
 			m.m31 = m31;
 			m.m32 = m32;
 			m.m33 = m33;
-			
+
 			return m;
 		}
 

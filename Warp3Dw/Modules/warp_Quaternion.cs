@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -28,15 +28,15 @@ namespace Warp3Dw
 
 		public warp_Quaternion (float x, float y, float z, float w)
 		{
-			this.X = x;
-			this.Y = y;
-			this.Z = z;
-			this.W = w;
+			X = x;
+			Y = y;
+			Z = z;
+			W = w;
 		}
 
 		public warp_Quaternion getClone ()
 		{
-			return new warp_Quaternion (this.X, this.Y, this.Z, this.W);
+			return new warp_Quaternion (X, Y, Z, W);
 		}
 
 		static public warp_Quaternion matrix (warp_Matrix xfrm)
@@ -70,7 +70,7 @@ namespace Warp3Dw
 
 				float s = (float)Math.Sqrt ((xfrm [i, i] - (xfrm [j, j] + xfrm [k, k])) + 1.0f);
 				quat [i] = s * 0.5f;
-				if (s != 0.0)
+                if (!warp_Math.FloatApproxEqual(s, 0.0f))
 				{
 					s = 0.5f / s;
 				}
@@ -91,15 +91,15 @@ namespace Warp3Dw
 				{
 					if (index == 0)
 					{
-						return this.X;
+						return X;
 					}
-					return this.Y;
+					return Y;
 				}
 				if (index == 2)
 				{
-					return this.Z;
+					return Z;
 				}
-				return this.W;
+				return W;
 			}
 			set
 			{
@@ -108,19 +108,19 @@ namespace Warp3Dw
 				{
 					if (index == 0)
 					{
-						this.X = value;
+						X = value;
 					} else
 					{
-						this.Y = value;
+						Y = value;
 					}
 				} else
 				{
 					if (index == 2)
 					{
-						this.Z = value;
+						Z = value;
 					} else
 					{
-						this.W = value;
+						W = value;
 					}
 				}
 			}

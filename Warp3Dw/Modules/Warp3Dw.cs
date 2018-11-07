@@ -6,17 +6,16 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
 using System;
 using System.Collections;
-using Warp3Dw;
 
 namespace Warp3Dw
 {
-	public partial class Warp3D
+	public class Warp3D
 	{
 		warp_Scene _scene = null;
 		//string _waiting = "Waiting...";
@@ -149,6 +148,23 @@ namespace Warp3Dw
 			return true;
 		}
 
+        public bool ProjectCylindric( string name )
+        {
+            if ( _scene == null )
+            {
+                return false;
+            }
+
+            warp_Object o = _scene.sceneobject( name );
+            if ( o == null )
+            {
+                return false;
+            }
+
+            warp_TextureProjector.projectCylindric( o );
+
+            return true;
+        }
 		public bool ShiftObject (string name, float x, float y, float z)
 		{
 			if (_scene == null)
@@ -542,7 +558,9 @@ namespace Warp3Dw
 			try
 			{
 				list = studio.importFromFile (name, path);
-
+                if (list == null)
+                    return null;
+                
 				if (addtoscene)
 				{
 					foreach (DictionaryEntry myDE in list)
@@ -791,7 +809,7 @@ namespace Warp3Dw
 		public void Reset ()
 		{
 			_scene = null;
-			System.GC.Collect ();
+			GC.Collect ();
 		}
 
 		public void DisplayDefaultScene ()

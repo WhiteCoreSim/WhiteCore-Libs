@@ -6,7 +6,7 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -27,7 +27,7 @@ namespace Warp3Dw
 		{
 		}
 
-		public warp_FXLensFlare (String name, warp_Scene scene, bool zBufferSensitive) : base (scene)
+		public warp_FXLensFlare (string name, warp_Scene scene, bool zBufferSensitive) : base (scene)
 		{
 			this.zBufferSensitive = zBufferSensitive;
 
@@ -121,7 +121,7 @@ namespace Warp3Dw
 			int px = flareObject.fastvertex [0].x;
 			int py = flareObject.fastvertex [0].y;
 
-			if (flareObject.fastvertex [0].clipcode != 0)
+            if ( !flareObject.fastvertex[ 0 ].visible )
 			{
 				return;
 			}
@@ -133,8 +133,8 @@ namespace Warp3Dw
 			int cx = screen.width / 2;
 			int cy = screen.height / 2;
 
-			float dx = (float)(cx - px);
-			float dy = (float)(cy - py);
+			float dx = cx - px;
+			float dy = cy - py;
 			int posx, posy, xsize, ysize;
 			float zoom;
 								
@@ -186,8 +186,8 @@ namespace Warp3Dw
 				offset = y * w;
 				for (int x = w - 1; x >= 0; x--)
 				{
-					relX = (float)(x - (w >> 1)) / (float)(w >> 1);
-					relY = (float)(y - (h >> 1)) / (float)(h >> 1);
+					relX = (x - (w >> 1)) / (float)(w >> 1);
+					relY = (y - (h >> 1)) / (float)(h >> 1);
 					newTexture.pixel [offset + x] = palette [warp_Math.crop ((int)(255 * Math.Sqrt (relX * relX + relY * relY)), 0, 255)];
 				}
 			}
@@ -240,7 +240,7 @@ namespace Warp3Dw
 				pos = (int)warp_Math.random (rad, 1023 - rad);
 				for (int k = pos - rad; k <= pos + rad; k++)
 				{
-					relPos = (float)(k - pos + rad) / (float)(rad * 2);
+					relPos = (k - pos + rad) / (float)(rad * 2);
 					radialMap [k] += (int)(255 * (1 + Math.Sin ((relPos - 0.25) * 3.14159 * 2)) / 2);
 				}
 			}
@@ -252,8 +252,8 @@ namespace Warp3Dw
 				offset = y * size;
 				for (int x = size - 1; x >= 0; x--)
 				{
-					xrel = (float)(2 * x - size) / (float)size;
-					yrel = (float)(2 * y - size) / (float)size;
+					xrel = (2 * x - size) / (float)size;
+					yrel = (2 * y - size) / (float)size;
 					angle = (int)(1023 * Math.Atan2 (xrel, yrel) / 3.14159 / 2) & 1023;
 					reldist = Math.Max ((int)(255 - 255 * warp_Math.pythagoras (xrel, yrel)), 0);
 					texture.pixel [x + offset] = warp_Color.scale (color, radialMap [angle] * reldist / 255);
@@ -276,9 +276,9 @@ namespace Warp3Dw
 				relDist = (float)i / 255;
 				diffuse = (float)Math.Cos (relDist * 1.57);
 				specular = (float)(255 / Math.Pow (2.718, relDist * 2.718) - (float)i / 16);
-				r = (int)((float)cr * diffuse + specular);
-				g = (int)((float)cg * diffuse + specular);
-				b = (int)((float)cb * diffuse + specular);
+				r = (int)(cr * diffuse + specular);
+				g = (int)(cg * diffuse + specular);
+				b = (int)(cb * diffuse + specular);
 				palette [i] = warp_Color.getCropColor (r, g, b);
 			}
 			
@@ -316,7 +316,7 @@ namespace Warp3Dw
 
 			for (int i = 0; i < ringsize; i++)
 			{
-				angle = 3.14159f / 180 * (float)(180 * i / ringsize);				
+                angle = 3.14159f / 180 * (180 * i / (float) ringsize);				
 				alphaPalette [255 - ringsize + i] = (int)(64 * Math.Sin (angle));
 			}
 			return alphaPalette;

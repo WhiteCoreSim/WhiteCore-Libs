@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -19,7 +19,8 @@ namespace Warp3Dw
 	/// </summary>
 	public class warp_Math
 	{
-		public const float pi = 3.1415926535f;
+        public const float EPLISON = 0.0000001f;
+        public const float pi = 3.1415926535f;
 		const float rad2scale = 4096f / 3.14159265f / 2f;
 		const float pad = 256 * 3.14159265f;
 
@@ -31,7 +32,7 @@ namespace Warp3Dw
 		static bool fastRndInit = false;
 		static Random _rnd = new Random ();
 
-		
+
 		public warp_Math ()
 		{
 			//
@@ -62,6 +63,11 @@ namespace Warp3Dw
 		{
 			return averidge + random () * delta;
 		}
+
+        public static bool FloatApproxEqual (float valA, float valB)
+        {
+            return (Math.Abs (valA - valB) <= EPLISON);
+        }
 
 		public static int fastRnd (int bits)
 		{
@@ -111,7 +117,7 @@ namespace Warp3Dw
 			return cosinus [(int)((angle + pad) * rad2scale) & 0xFFF];
 		}
 
-		private static void buildTrig ()
+		static void buildTrig ()
 		{
 			//System.Console.WriteLine(">> Building warp_Math LUT");
 
@@ -120,8 +126,8 @@ namespace Warp3Dw
 
 			for (int i = 0; i < 4096; i++)
 			{
-				sinus [i] = (float)Math.Sin ((float)i / rad2scale);
-				cosinus [i] = (float)Math.Cos ((float)i / rad2scale);
+				sinus [i] = (float)Math.Sin (i / rad2scale);
+				cosinus [i] = (float)Math.Cos (i / rad2scale);
 			}
 
 			trig = true;
@@ -195,7 +201,7 @@ namespace Warp3Dw
 
 		public static void clearBuffer (byte[] buffer, byte value)
 		{
-			System.Array.Clear (buffer, 0, buffer.GetLength (0));		
+			Array.Clear (buffer, 0, buffer.GetLength (0));
 		}
 
 		public static void cropBuffer (int[] buffer, int min, int max)
@@ -206,7 +212,7 @@ namespace Warp3Dw
 
 		public static void copyBuffer (int[] source, int[] target)
 		{
-			System.Array.Copy (source, 0, target, 0, crop (source.GetLength (0), 0, target.GetLength (0)));
+			Array.Copy (source, 0, target, 0, crop (source.GetLength (0), 0, target.GetLength (0)));
 		}
 
 		/*

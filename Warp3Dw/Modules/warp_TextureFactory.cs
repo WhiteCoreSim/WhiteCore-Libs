@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -64,15 +64,13 @@ namespace Warp3Dw
 			initNoiseBuffer ();
 			warp_Texture t = new warp_Texture (w, h);
 			int pos = 0;
-			float wavelength = (float)((w > h) ? w : h) / density;
+			float wavelength = ((w > h) ? w : h) / density;
 
 			for (int y = 0; y < h; y++)
 			{
 				for (int x = 0; x < w; x++)
 				{
-					t.pixel [pos++] = (int)((float)scale *
-					perlin2d (x, y, wavelength, persistency,
-						samples));
+					t.pixel [pos++] = (int)(scale * perlin2d (x, y, wavelength, persistency, samples));
 				}
 			}
 			return t;
@@ -84,16 +82,14 @@ namespace Warp3Dw
 			initNoiseBuffer ();
 			warp_Texture t = new warp_Texture (w, h);
 			int pos = 0;
-			float wavelength = (float)((w > h) ? w : h) / density;
+			float wavelength = ((w > h) ? w : h) / density;
 
 			for (int y = 0; y < h; y++)
 			{
 				for (int x = 0; x < w; x++)
 				{
-					t.pixel [pos++] = (int)((double)scale *
-					(Math.Sin (32 *
-					perlin2d (x, y, wavelength,
-						persistency, samples)) * 0.5 + 0.5));
+					t.pixel [pos++] = (int)(scale *	(Math.Sin (32 *
+                                                               perlin2d (x, y, wavelength, persistency, samples)) * 0.5 + 0.5));
 				}
 			}
 			return t;
@@ -107,17 +103,15 @@ namespace Warp3Dw
 			initNoiseBuffer ();
 			warp_Texture t = new warp_Texture (w, h);
 			int pos = 0;
-			float wavelength = (float)((w > h) ? w : h) / density;
+			float wavelength = ((w > h) ? w : h) / density;
 			float perlin;
 
 			for (int y = 0; y < h; y++)
 			{
 				for (int x = 0; x < w; x++)
 				{
-					perlin = (float)levels *
-					perlin2d (x, y, wavelength, persistency, samples);
-					t.pixel [pos++] = (int)((float)scale *
-					(perlin - (float)(int)perlin));
+					perlin = levels * perlin2d (x, y, wavelength, persistency, samples);
+					t.pixel [pos++] = (int)(scale * (perlin - (int)perlin));
 				}
 			}
 			return t;
@@ -149,8 +143,8 @@ namespace Warp3Dw
 		{
 			int intx = (int)x;
 			int inty = (int)y;
-			float fracx = x - (float)intx;
-			float fracy = y - (float)inty;
+			float fracx = x - intx;
+			float fracy = y - inty;
 
 			float i1 = warp_Math.interpolate (noise (intx, inty, octave),
 				           noise (intx + 1, inty, octave), fracx);
@@ -183,29 +177,25 @@ namespace Warp3Dw
 
 			if (id == 0)
 			{
-				return (float)(1f -
-				((n * (n * n * 15731 + 789221) + 1376312589) &
-				0x7FFFFFFF) *
-				0.000000000931322574615478515625f);
+				return 1f -
+                    ((n * (n * n * 15731 + 789221) + 1376312589) &
+                     0x7FFFFFFF) * 0.000000000931322574615478515625f;
 			}
 			if (id == 1)
 			{
-				return (float)(1f -
-				((n * (n * n * 12497 + 604727) + 1345679039) &
-				0x7FFFFFFF) *
-				0.000000000931322574615478515625f);
+				return 1f -
+                    ((n * (n * n * 12497 + 604727) + 1345679039) &
+                     0x7FFFFFFF) * 0.000000000931322574615478515625f;
 			}
 			if (id == 2)
 			{
-				return (float)(1f -
-				((n * (n * n * 19087 + 659047) + 1345679627) &
-				0x7FFFFFFF) *
-				0.000000000931322574615478515625f);
+				return 1f -
+                    ((n * (n * n * 19087 + 659047) + 1345679627) &
+                     0x7FFFFFFF) * 0.000000000931322574615478515625f;
 			}
-			return (float)(1f -
-			((n * (n * n * 16267 + 694541) + 1345679501) &
-			0x7FFFFFFF) *
-			0.000000000931322574615478515625f);
+			return 1f -
+                ((n * (n * n * 16267 + 694541) + 1345679501) &
+                 0x7FFFFFFF) * 0.000000000931322574615478515625f;
 		}
 
 		static void initNoiseBuffer ()

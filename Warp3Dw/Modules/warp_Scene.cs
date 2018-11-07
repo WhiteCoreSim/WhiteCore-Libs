@@ -6,11 +6,10 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
-using System;
 using System.Collections;
 using System.Drawing;
 
@@ -21,8 +20,8 @@ namespace Warp3Dw
 	/// </summary>
 	public class warp_Scene : warp_CoreObject
 	{
-		public static String version = "1.0.0";
-		public static String release = "0010";
+		public static string version = "1.0.0";
+		public static string release = "0010";
 
 		public warp_RenderPipeline renderPipeline;
 
@@ -55,6 +54,22 @@ namespace Warp3Dw
 			renderPipeline = new warp_RenderPipeline (this, width, height);
 		}
 
+		public void destroy()
+		{
+        	objects=objectData.Count;
+            foreach(warp_Object o in objectData.Values)
+                o.destroy();
+
+			objectData.Clear();
+            lightData.Clear();
+            materialData.Clear();
+            cameraData.Clear();
+            if(renderPipeline != null)
+                renderPipeline.Dispose();
+            environment = null;
+            defaultCamera = null;
+            wobject = null;
+		}
 		public void removeAllObjects ()
 		{
 			objectData = new Hashtable ();
@@ -97,22 +112,22 @@ namespace Warp3Dw
 			}
 		}
 
-		public warp_Object sceneobject (String key)
+		public warp_Object sceneobject (string key)
 		{
 			return (warp_Object)objectData [key];
 		}
 
-		public warp_Material material (String key)
+		public warp_Material material (string key)
 		{
 			return (warp_Material)materialData [key];
 		}
 
-		public warp_Camera camera (String key)
+		public warp_Camera camera (string key)
 		{
 			return (warp_Camera)cameraData [key];
 		}
 
-		public void addObject (String key, warp_Object obj)
+		public void addObject (string key, warp_Object obj)
 		{
 			obj.name = key;
 			objectData.Add (key, obj);
@@ -120,40 +135,40 @@ namespace Warp3Dw
 			objectsNeedRebuild = true;
 		}
 
-		public void removeObject (String key)
+		public void removeObject (string key)
 		{
 			objectData.Remove (key);
 			objectsNeedRebuild = true;
 			preparedForRendering = false;
 		}
 
-		public void addMaterial (String key, warp_Material m)
+		public void addMaterial (string key, warp_Material m)
 		{
 			materialData.Add (key, m);
 		}
 
-		public void removeMaterial (String key)
+		public void removeMaterial (string key)
 		{
 			materialData.Remove (key);
 		}
 
-		public void addCamera (String key, warp_Camera c)
+		public void addCamera (string key, warp_Camera c)
 		{
 			cameraData.Add (key, c);
 		}
 
-		public void removeCamera (String key)
+		public void removeCamera (string key)
 		{
 			cameraData.Remove (key);
 		}
 
-		public void addLight (String key, warp_Light l)
+		public void addLight (string key, warp_Light l)
 		{
 			lightData.Add (key, l);
 			lightsNeedRebuild = true;
 		}
 
-		public void removeLight (String key)
+		public void removeLight (string key)
 		{
 			lightData.Remove (key);
 			lightsNeedRebuild = true;
@@ -169,7 +184,7 @@ namespace Warp3Dw
 			//System.Console.WriteLine("warp_Scene| prepareForRendering : Preparing for realtime rendering ...");
 			rebuild ();
 			renderPipeline.buildLightMap ();
-			printSceneInfo ();
+			//printSceneInfo ();
 		}
 
 		public void printSceneInfo ()
@@ -181,7 +196,7 @@ namespace Warp3Dw
 
 		public void render ()
 		{
-			renderPipeline.render (this.defaultCamera);
+			renderPipeline.render (defaultCamera);
 		}
 
 		public Bitmap getImage ()

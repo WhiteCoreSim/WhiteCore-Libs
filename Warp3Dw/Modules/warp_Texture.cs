@@ -4,9 +4,9 @@
  *
  * Licensed under the Creative Commons Attribution Share-Alike 2.5 Canada
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
- * 
+ *
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -20,7 +20,7 @@ namespace Warp3Dw
 	/// <summary>
 	/// Summary description for warp_Texture.
 	/// </summary>
-	
+
 	public class warp_Texture
 	{
 		public int width;
@@ -28,7 +28,7 @@ namespace Warp3Dw
 		public int bitWidth;
 		public int bitHeight;
 		public int[] pixel;
-		public String path = null;
+		public string path = null;
 
 		public static int ALPHA = unchecked((int)0xFF000000);
 		// alpha mask
@@ -47,23 +47,27 @@ namespace Warp3Dw
 			width = w;
 			pixel = new int[width * height];
 
-			System.Array.Copy (data, pixel, pixel.Length);
+			Array.Copy (data, pixel, pixel.Length);
 		}
 
 		public warp_Texture (string path)
 		{
 			Bitmap map;
-			
-			if (path.StartsWith ("http"))
+
+			if (path.StartsWith ("http", StringComparison.OrdinalIgnoreCase))
 			{
 				WebRequest webrq = WebRequest.Create (path);
-				map = (Bitmap)Bitmap.FromStream (webrq.GetResponse ().GetResponseStream ());
+                var response = webrq.GetResponse ();
+                var respstream = response.GetResponseStream ();
+                response.Dispose ();
+                map = (Bitmap)Image.FromStream (respstream);
 			} else
 			{
 				map = new Bitmap (path, false);
 			}
 
 			loadTexture (map);
+            map.Dispose ();
 		}
 
 		public warp_Texture (Bitmap bitmap)
@@ -139,8 +143,8 @@ namespace Warp3Dw
 
 			BitmapData bmData = map.LockBits (new Rectangle (0, 0, map.Width, map.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 			int scanline = bmData.Stride;
-    
-			System.IntPtr Scan0 = bmData.Scan0;
+
+			IntPtr Scan0 = bmData.Scan0;
 /*
               // Declare an array to hold the bytes of the bitmap.
         // This code is specific to a bitmap with 24 bits per pixels.
@@ -148,7 +152,7 @@ namespace Warp3Dw
 
         // Copy the RGB values into the array.
         System.Runtime.InteropServices.Marshal.Copy (  Scan0, bytes, 0, bytes.Length  );
-     
+
             int nOffset = bmData.Stride - map.Width * 3;
         int nPixel = 0;
         int p =0;
@@ -173,8 +177,8 @@ namespace Warp3Dw
 			unsafe
 			{
 				byte* p = (byte*)(void*)Scan0;
-                
-				
+
+
 				int nOffset = bmData.Stride - map.Width * 3;
 				int nPixel = 0;
 
@@ -186,7 +190,7 @@ namespace Warp3Dw
 						int green = p [1];
 						int red = p [2];
 
-						pixel [nPixel++] = ALPHA | red << 16 | green << 8 | blue;	
+						pixel [nPixel++] = ALPHA | red << 16 | green << 8 | blue;
 						p += 3;
 					}
 
@@ -213,8 +217,8 @@ namespace Warp3Dw
 						newpixels [i + offset] = pixel [(i * width / w) + offset2];
 				}
 
-				width = w; 
-				height = h; 
+				width = w;
+				height = h;
 				pixel = newpixels;
 			}
 		}

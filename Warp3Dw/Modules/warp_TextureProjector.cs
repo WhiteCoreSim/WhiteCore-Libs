@@ -6,7 +6,7 @@
  * license: http://creativecommons.org/licenses/by-sa/2.5/ca/
  * 
  * Revised and renamed for WhiteCore-Sim, https://whitecore-sim.org
- *  2014, 2015
+ *  2014 - 2018
  * Greythane:  greythane@gmail.com
  */
 
@@ -45,5 +45,18 @@ namespace Warp3Dw
 				obj.fastvertex [i].v = (obj.fastvertex [i].pos.z - min.z) * dv;
 			}
 		}
+		public static void projectCylindric(warp_Object obj)
+		{
+			obj.rebuild();
+			warp_Vector min = obj.minimum();
+			warp_Vector max = obj.maximum();
+			float dz = 1 / (max.z - min.z);
+			for (int i = 0; i < obj.vertices; i++)
+			{
+				obj.fastvertex[i].pos.buildCylindric();
+				obj.fastvertex[i].u = obj.fastvertex[i].pos.theta / (2 * 3.14159265f);
+				obj.fastvertex[i].v = (obj.fastvertex[i].pos.z - min.z) * dz;
+			}
+		}		
 	}
 }
