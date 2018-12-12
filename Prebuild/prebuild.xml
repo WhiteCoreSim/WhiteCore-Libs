@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.10.xsd" version="1.10">
-	<Solution name="Prebuild" version="2.0.7">
+	<Solution name="Prebuild" version="2.0.9">
 		<Configuration name="Debug">
 			<Options>
 				<CompilerDefines>DEBUG;TRACE</CompilerDefines>
@@ -30,7 +30,7 @@
 		         type="Exe"
 		         rootNamespace="Prebuild"
 		         startupObject="Prebuild.Prebuild"
-		         version="2.0.7"
+		         version="2.0.9"
 		         frameworkVersion="v4_0"
 		>
 			<Author>Matthew Holmes (matthew@wildfiregames.com)</Author>

@@ -217,6 +217,7 @@ namespace Prebuild.Core.Targets
 				}
 				ps.WriteLine("	  <FileUpgradeFlags>");
 				ps.WriteLine("	  </FileUpgradeFlags>");
+                ps.WriteLine("      <ReleaseVersion>{0}</ReleaseVersion>",solution.Version);
 
 				ps.WriteLine("	</PropertyGroup>");
                 if (!string.IsNullOrEmpty(project.ApplicationManifest))
@@ -235,7 +236,7 @@ namespace Prebuild.Core.Targets
 					ps.WriteLine("	  <ConfigurationOverrideFile>");
 					ps.WriteLine("	  </ConfigurationOverrideFile>");
 					ps.WriteLine("	  <DefineConstants>{0}</DefineConstants>",
-                        conf.Options["CompilerDefines"] == "" ? this.kernel.ForcedConditionals : conf.Options["CompilerDefines"] + ";" + kernel.ForcedConditionals);
+                                 (string)conf.Options["CompilerDefines"] == "" ? this.kernel.ForcedConditionals : conf.Options["CompilerDefines"] + ";" + kernel.ForcedConditionals);
 					ps.WriteLine("	  <DocumentationFile>{0}</DocumentationFile>", Helper.NormalizePath(conf.Options["XmlDocFile"].ToString()));
 					ps.WriteLine("	  <DebugSymbols>{0}</DebugSymbols>", conf.Options["DebugInformation"]);
 					ps.WriteLine("	  <FileAlignment>{0}</FileAlignment>", conf.Options["FileAlignment"]);
@@ -279,7 +280,7 @@ namespace Prebuild.Core.Targets
 					ps.Write("	  <Reference");
 					ps.Write(" Include=\"");
 					ps.Write(refr.Name);
-					ps.WriteLine("\" >");
+					ps.WriteLine("\">");
 					ps.Write("		  <Name>");
 					ps.Write(refr.Name);
 					ps.WriteLine("</Name>");
@@ -604,7 +605,7 @@ namespace Prebuild.Core.Targets
 				foreach (ConfigurationNode conf in project.Configurations)
 				{
 					ps.Write("	<PropertyGroup");
-					ps.Write(" Condition = \" '$(Configuration)|$(Platform)' == '{0}|{1}' \"", conf.Name, conf.Platform);
+					ps.Write(" Condition=\" '$(Configuration)|$(Platform)' == '{0}|{1}' \"", conf.Name, conf.Platform);
 					ps.WriteLine(" />");
 				}
 				ps.WriteLine("</Project>");
@@ -673,6 +674,10 @@ namespace Prebuild.Core.Targets
 						}
 						ss.WriteLine("\tEndGlobalSection");
 					}
+
+                    ss.WriteLine("\tGlobalSection(MonoDevelopProperties) = postSolution");
+                    ss.WriteLine("\t\tversion = " + solution.Version);
+                    ss.WriteLine("\tEndGlobalSection");
 
 					ss.WriteLine("EndGlobal");
 				}

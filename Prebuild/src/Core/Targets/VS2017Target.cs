@@ -14,17 +14,17 @@ namespace Prebuild.Core.Targets
     /// <summary>
     /// 
     /// </summary>
-    [Target("vs2015")]
-    public class VS2015Target : VSGenericTarget
+    [Target("vs2017")]
+    public class VS2017Target : VSGenericTarget
     {
         #region Fields
 
         string solutionVersion = "12.00";
         string productVersion = "14.0.23107.0";
         string schemaVersion = "2.0";
-        string versionName = "Visual Studio 14";
-        string name = "vs2015";
-        VSVersion version = VSVersion.VS15;
+        string versionName = "Visual Studio 15";
+        string name = "vs2017";
+        VSVersion version = VSVersion.VS17;
 
         #endregion
 
@@ -109,7 +109,7 @@ namespace Prebuild.Core.Targets
             case FrameworkVersion.v4_7_2:
             case FrameworkVersion.v4_7_1:
             case FrameworkVersion.v4_7:
-                return "ToolsVersion=\"14.0\"";
+                return "ToolsVersion=\"15.0\"";
             case FrameworkVersion.v4_6_2:
             case FrameworkVersion.v4_6_1:
             case FrameworkVersion.v4_6:
@@ -128,7 +128,7 @@ namespace Prebuild.Core.Targets
 
         public override string SolutionTag
         {
-            get { return "# Visual Studio 14"; }
+            get { return "# Visual Studio 15"; }
         }
 
         #endregion
@@ -138,7 +138,7 @@ namespace Prebuild.Core.Targets
         /// <summary>
         /// Initializes a new instance of the <see cref="VS2012Target"/> class.
         /// </summary>
-        public VS2015Target()
+        public VS2017Target()
             : base()
         {
         }

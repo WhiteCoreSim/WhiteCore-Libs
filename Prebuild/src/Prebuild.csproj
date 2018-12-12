@@ -240,6 +240,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Targets\VS2015Target.cs" />
+    <Compile Include="Core\Targets\VS2017Target.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
