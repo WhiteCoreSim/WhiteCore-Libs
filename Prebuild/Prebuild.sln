@@ -27,6 +27,6 @@ Global
 		$1.DirectoryNamespaceAssociation = None
 		$1.ResourceNamePolicy = FileFormatDefault
 		description = @WhiteCore modifications and build\nUpdate for Windows 10 frameworks
-		version = 2.0.9
+		version = 2.0.10
 	EndGlobalSection
 EndGlobal
