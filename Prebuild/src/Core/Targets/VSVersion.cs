@@ -65,7 +65,10 @@ namespace Prebuild.Core.Targets
         /// <summary>
         /// Visual Studio 2017 
         /// </summary>
-        VS17
-
+        VS17,
+		/// <summary>
+		/// Visual Studio 2019
+		/// </summary>
+		VS19
 	}
 }

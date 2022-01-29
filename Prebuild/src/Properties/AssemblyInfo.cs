@@ -72,7 +72,7 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
-[assembly: AssemblyVersion("2.0.7.*")]
+[assembly: AssemblyVersion("2.0.11.*")]
 
 //
 // Version information for an assembly consists of the following four values:

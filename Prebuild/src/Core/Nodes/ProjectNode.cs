@@ -101,6 +101,7 @@ namespace Prebuild.Core.Nodes
         /// .NET 4.5.1
         /// </summary>
         v4_5_1,
+		v4_5_2,
         /// <summary>
         /// .NET 4.6 Windows 10 initial
         /// </summary> 
@@ -124,7 +125,8 @@ namespace Prebuild.Core.Nodes
         /// <summary>
         /// .NET 4.7.2 Windows 10 April 2018 Update
         /// </summary>
-        v4_7_2
+        v4_7_2,
+		v4_8,
 
     }
 	/// <summary>
